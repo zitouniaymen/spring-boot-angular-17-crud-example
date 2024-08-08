@@ -5,6 +5,11 @@ Full-stack Angular 17 + Spring Boot Tutorial CRUD Application in that:
 - We can create, retrieve, update, delete Tutorials.
 - We can also find Tutorials by title.
 
+- Full-stack Angular 17 + Spring Boot Tutorial CRUD Application in that:
+- Each Tutorial has id, title, description, published status.
+- We can create, retrieve, update, delete Tutorials.
+- We can also find Tutorials by title.
+
 ![spring-boot-angular-17-example-crud.png](spring-boot-angular-17-example-crud.png)
 
 > [Spring Boot + Angular 17 CRUD example](https://www.bezkoder.com/spring-boot-angular-17-crud/)
