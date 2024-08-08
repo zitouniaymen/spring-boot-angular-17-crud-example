@@ -1,31 +1,61 @@
-# Build stage
-FROM maven:3-openjdk-17 AS build
-WORKDIR /build
+pipeline {
+    agent any
 
-# Copier le fichier pom.xml et télécharger les dépendances pour éviter de re-télécharger à chaque changement de code
-COPY spring-boot-server/pom.xml .
-RUN mvn dependency:go-offline
+    environment {
+        // Définir les variables d'environnement JAVA_HOME, MAVEN_HOME, et Docker Hub credentials
+        JAVA_HOME = 'C:\\Java\\jdk-17.0.9_windows-x64_bin\\jdk-17.0.9'
+        MAVEN_HOME = 'C:\\apache-maven-3.8.8\\apache-maven-3.8.8'
+        PATH = "${env.PATH};${JAVA_HOME}\\bin;${MAVEN_HOME}\\bin"
+        DOCKER_CREDENTIALS_ID = 'FranceNanterre@2023'
+        DOCKER_IMAGE = 'zitouni/bsn'
+        DOCKER_TAG = "${env.GIT_BRANCH ?: 'latest'}"
+    }
 
-# Copier le code source et construire le projet
-COPY spring-boot-server/src ./src
-RUN mvn clean package -DskipTests
+    stages {
+stage('Checkout') {
+    steps {
+        // Cloner le code source depuis le dépôt, en utilisant la branche develop
+        checkout([$class: 'GitSCM', branches: [[name: 'develop']], userRemoteConfigs: [[url: 'https://github.com/zitouniaymen/spring-boot-angular-17-crud-example.git']]])
+    }
+}
 
-# Runtime stage
-FROM amazoncorretto:17 AS runtime
-ARG PROFILE=local
-ARG APP_VERSION=0.0.1-SNAPSHOT
 
-WORKDIR /app
+        stage('Build') {
+            steps {
+                // Se déplacer dans le répertoire du projet avant de lancer Maven
+                dir('spring-boot-server') {
+                    bat "${MAVEN_HOME}\\bin\\mvn clean install"
+                }
+            }
+        }
 
-# Copier le fichier JAR généré depuis l'étape de build
-COPY --from=build /build/target/spring-boot-jpa-h2-${APP_VERSION}.jar /app/
+    stage('Test') {
+            steps {
+                // Se déplacer dans le répertoire du projet avant de lancer Maven
+                dir('spring-boot-server') {
+                    bat "${MAVEN_HOME}\\bin\\mvn test"
+                }
+            }
+        }
 
-# Exposer le port 8080
-EXPOSE 8080
+        stage('Deploy') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo 'Déploiement de l\'application...'
+                // Ajouter des étapes de déploiement si nécessaire
+            }
+        }
+    }
 
-# Définir les variables d'environnement
-ENV DB_URL=jdbc:postgresql://localhost:5432/dockerTest
-ENV ACTIVE_PROFILE=${PROFILE}
-
-# Démarrer l'application
-CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} spring-boot-jpa-h2-0.0.1-SNAPSHOT.jar
+    post {
+    
+        failure {
+            echo 'Le pipeline a échoué.'
+        }
+        success {
+            echo 'Le pipeline a réussi.'
+        }
+    }
+}
