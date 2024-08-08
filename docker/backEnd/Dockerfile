@@ -58,4 +58,5 @@ stage('Checkout') {
             echo 'Le pipeline a réussi.'
         }
     }
-}
+    }
+    }
