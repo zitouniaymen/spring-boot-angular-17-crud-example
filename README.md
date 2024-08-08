@@ -1,13 +1,7 @@
 # Spring Boot + Angular 17 CRUD example
 
 jhh,,n
-
-
-Run both Back-end & Front-end in one place:
-> [Integrate Angular with Spring Boot Rest API](https://www.bezkoder.com/integrate-angular-12-spring-boot/)
-
-More Practice:
-> [Angular + Spring Boot: File upload example](https://www.bezkoder.com/angular-17-spring-boot-file-upload/)
+g Boot: File upload example](https://www.bezkoder.com/angular-17-spring-boot-file-upload/)
 
 > [Angular + Spring Boot: JWT Authentication and Authorization example](https://www.bezkoder.com/angular-17-spring-boot-jwt-auth/)
 
