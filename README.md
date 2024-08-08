@@ -1,9 +1,7 @@
 # Spring Boot + Angular 17 CRUD example
 
 
-![spring-boot-angular-17-example-crud.png](spring-boot-angular-17-example-crud.png)
 
-> [Spring Boot + Angular 17 CRUD example](https://www.bezkoder.com/spring-boot-angular-17-crud/)
 
 Run both Back-end & Front-end in one place:
 > [Integrate Angular with Spring Boot Rest API](https://www.bezkoder.com/integrate-angular-12-spring-boot/)
