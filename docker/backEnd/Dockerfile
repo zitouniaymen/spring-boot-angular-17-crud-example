@@ -28,4 +28,4 @@ ENV DB_URL=jdbc:postgresql://localhost:5432/dockerTest
 ENV ACTIVE_PROFILE=${PROFILE}
 
 # Démarrer l'application
-CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} spring-boot-jpa-h2-${APP_VERSION}.jar
+CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} spring-boot-jpa-h2-0.0.1-SNAPSHOT.jar
